@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { DayRecord, CATEGORIES, AttendanceCategory } from "@/lib/types";
 import { calcWorkHours } from "@/lib/utils";
 import QuickTimeButtons from "./QuickTimeButtons";
-import { X, Clock, MessageSquare } from "lucide-react";
+import { X, Clock, Coffee, MessageSquare } from "lucide-react";
 
 interface BottomSheetProps {
   record: DayRecord | null;
@@ -108,7 +108,7 @@ export default function BottomSheet({ record, onUpdate, onClose }: BottomSheetPr
             </div>
 
             {/* Time inputs - big touch targets */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-3">
               <div>
                 <label className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
                   <Clock size={12} /> 出勤
@@ -129,11 +129,21 @@ export default function BottomSheet({ record, onUpdate, onClose }: BottomSheetPr
                   onChange={(e) => onUpdate({ endTime: e.target.value })}
                 />
               </div>
+              <div>
+                <label className="text-[11px] font-bold text-amber-500 uppercase tracking-wider mb-2 flex items-center gap-1">
+                  <Coffee size={12} /> 休憩
+                </label>
+                <input
+                  type="time"
+                  value={record.breakTime}
+                  onChange={(e) => onUpdate({ breakTime: e.target.value })}
+                />
+              </div>
             </div>
 
             {/* Quick presets */}
             <QuickTimeButtons
-              onSelect={(start, end) => onUpdate({ startTime: start, endTime: end })}
+              onSelect={(start, end, breakTime) => onUpdate({ startTime: start, endTime: end, breakTime })}
             />
 
             {/* Note */}
