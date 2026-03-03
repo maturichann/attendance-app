@@ -7,7 +7,7 @@ import CalendarGrid from "@/components/CalendarGrid";
 import BottomSheet from "@/components/BottomSheet";
 import Summary from "@/components/Summary";
 import PunchCard from "@/components/PunchCard";
-import { Save, BarChart3, CalendarDays } from "lucide-react";
+import { BarChart3, CalendarDays } from "lucide-react";
 
 type ViewMode = "calendar" | "summary";
 
@@ -136,30 +136,6 @@ export default function AttendancePage() {
           </div>
         )}
 
-        {/* Save button - fixed at bottom */}
-        <div className="shrink-0 px-4 pb-4 pt-2">
-          <button
-            onClick={handleSave}
-            disabled={saving}
-            className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-sm shadow-lg active:scale-[0.97] transition-all duration-300 disabled:opacity-60 ${
-              saved
-                ? "bg-emerald-500 text-white shadow-emerald-500/30"
-                : "bg-gradient-to-r from-indigo-500 to-indigo-600 text-white shadow-indigo-500/30"
-            }`}
-          >
-            {saved ? (
-              <>
-                <span className="animate-check-pop">&#10003;</span>
-                保存しました
-              </>
-            ) : (
-              <>
-                <Save size={16} />
-                {saving ? "保存中..." : "保存する"}
-              </>
-            )}
-          </button>
-        </div>
       </div>
 
       {/* Bottom sheet */}
@@ -168,6 +144,9 @@ export default function AttendancePage() {
         onUpdate={(updated) => selectedDate && updateRecord(selectedDate, updated)}
         onClose={() => setSelectedDate(null)}
         onPunchNow={handlePunchNow}
+        onSave={handleSave}
+        saving={saving}
+        saved={saved}
       />
     </div>
   );

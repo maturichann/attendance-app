@@ -4,16 +4,19 @@ import { useEffect } from "react";
 import { DayRecord, CATEGORIES, AttendanceCategory } from "@/lib/types";
 import { calcWorkHours } from "@/lib/utils";
 import QuickTimeButtons from "./QuickTimeButtons";
-import { X, Clock, Coffee, MessageSquare } from "lucide-react";
+import { X, Clock, Coffee, MessageSquare, Save } from "lucide-react";
 
 interface BottomSheetProps {
   record: DayRecord | null;
   onUpdate: (updated: Partial<DayRecord>) => void;
   onClose: () => void;
   onPunchNow: (type: "start" | "end") => void;
+  onSave: () => void;
+  saving: boolean;
+  saved: boolean;
 }
 
-export default function BottomSheet({ record, onUpdate, onClose }: BottomSheetProps) {
+export default function BottomSheet({ record, onUpdate, onClose, onSave, saving, saved }: BottomSheetProps) {
   useEffect(() => {
     if (record) {
       document.body.style.overflow = "hidden";
@@ -159,6 +162,29 @@ export default function BottomSheet({ record, onUpdate, onClose }: BottomSheetPr
                 className="w-full text-base px-4 py-3.5 rounded-2xl border-2 border-gray-100 bg-gray-50 focus:outline-none focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 transition-all duration-200"
               />
             </div>
+
+            {/* Save button */}
+            <button
+              onClick={onSave}
+              disabled={saving}
+              className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-sm shadow-lg active:scale-[0.97] transition-all duration-300 disabled:opacity-60 ${
+                saved
+                  ? "bg-emerald-500 text-white shadow-emerald-500/30"
+                  : "bg-gradient-to-r from-indigo-500 to-indigo-600 text-white shadow-indigo-500/30"
+              }`}
+            >
+              {saved ? (
+                <>
+                  <span className="animate-check-pop">&#10003;</span>
+                  保存しました
+                </>
+              ) : (
+                <>
+                  <Save size={16} />
+                  {saving ? "保存中..." : "保存する"}
+                </>
+              )}
+            </button>
           </div>
         </div>
       </div>
