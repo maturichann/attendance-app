@@ -1,7 +1,7 @@
 "use client";
 
 import { DayRecord } from "@/lib/types";
-import { Clock, CalendarDays, Coffee, FileText } from "lucide-react";
+import { Clock, CalendarDays, Coffee } from "lucide-react";
 
 interface SummaryProps {
   records: DayRecord[];
@@ -48,16 +48,10 @@ export default function Summary({ records }: SummaryProps) {
       value: `${paidLeave}日`,
       color: "bg-amber-50 text-amber-600",
     },
-    {
-      icon: <FileText size={18} />,
-      label: "入力済み",
-      value: `${workDays}/${records.filter((r) => !r.isWeekend).length}`,
-      color: "bg-purple-50 text-purple-600",
-    },
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-3 px-4 py-3">
+    <div className="grid grid-cols-3 gap-3 px-4 py-3">
       {stats.map((s) => (
         <div key={s.label} className={`rounded-2xl p-3 ${s.color}`}>
           <div className="flex items-center gap-2 mb-1">
